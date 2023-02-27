@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-back-button
+      slot="start"
+      color="dark"
+      routerLink="/dashboard"
+    ></ion-back-button>
+    <ion-title>Aplicacion de musica</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list *ngIf="!show">
+    <ion-item button *ngFor="let track of playlist" (click)="start(track)">
+      <ion-label
+        color="track == activeTrack ? 'success' : 'primary"
+        color="light"
+      >
+        {{track.name}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer *ngIf="show">
+    <ion-toolbar color="dark">
+      <ion-row>
+        <ion-col size="12" class="ion-padding" class="ion-text-center">
+          <ion-card>
+            <img src="/assets/images/imagen1.jpg" />
+            <ion-card-header>
+              <ion-card-title>{{activeTrack?.name}}</ion-card-title>
+              <ion-card-subtitle>Reproductor de musica</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="12">
+          <!-- <ion-range
+            #range
+            [(ngModel)]=" progress"
+            max="100"
+            color="success"
+            (touchend)="seek"
+            (mouseup)="seek()"
+          ></ion-range> -->
+
+          <ion-range
+          #range
+          [(ngModel)]=" progress"
+          max="100"
+          color="success"
+          (touchend)="seek"
+          (mouseup)="seek()"
+            (ionKnobMoveStart)="onIonKnobMoveStart($event)"
+            (ionKnobMoveEnd)="onIonKnobMoveEnd($event)"
+          ></ion-range>
+          <div>
+            <ion-label>ionKnobMoveStart: {{ moveStart }}</ion-label>
+          </div>
+          <div>
+            <ion-label>ionKnobMoveEnd: {{ moveEnd }}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" class="ion-text-center">
+          <ion-button color="primary" (click)="prev()">
+            <ion-icon slot="icon-only" name="play-back-outline"></ion-icon>
+          </ion-button>
+          <ion-button
+            fill="clear"
+            (click)="togglePlayer(false)"
+            *ngIf="!isPlaying"
+            color="light"
+          >
+            <ion-icon slot="icon-only" name="play-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="togglePlayer(true)" color="light">
+            <ion-icon
+              slot="icon-only"
+              name="pause-outline"
+              *ngIf="!isPlaying"
+            ></ion-icon>
+          </ion-button>
+          <ion-button (click)="next()" color="primary">
+            <ion-icon slot="icon-only" name="play-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

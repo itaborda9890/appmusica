@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "appmusica",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
